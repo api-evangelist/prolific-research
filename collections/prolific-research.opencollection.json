@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Prolific API",
+    "version": "v1",
+    "description": "Programmatic access to the Prolific online research participant recruitment platform. Base URL https://api.prolific.com/api/v1; API token auth via the Authorization header as 'Token <your token>'."
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "Authorization",
+        "value": "Token {{apiToken}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Studies", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List all studies", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/studies/" },
+          "docs": "Lists all studies, with the option to filter by study status."
+        },
+        {
+          "info": { "name": "Create a draft study", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/studies/", "body": { "type": "json", "data": "{}" } },
+          "docs": "Creates a new draft study."
+        },
+        {
+          "info": { "name": "Retrieve a study", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/studies/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a single study by ID."
+        },
+        {
+          "info": { "name": "Update a study", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.prolific.com/api/v1/studies/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{}" } },
+          "docs": "Update a draft study."
+        },
+        {
+          "info": { "name": "Delete a study", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.prolific.com/api/v1/studies/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Delete a study."
+        },
+        {
+          "info": { "name": "Transition study status", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/studies/:id/transition/", "params": [ { "name": "id", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{\"action\":\"PUBLISH\"}" } },
+          "docs": "Transition a study status (PUBLISH, START, PAUSE, STOP)."
+        },
+        {
+          "info": { "name": "Show study cost", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/studies/:id/cost/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Show the calculated cost of a study."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Submissions", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List submissions", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/submissions/", "params": [ { "name": "study", "value": "", "type": "query", "description": "Required study ID." } ] },
+          "docs": "List submissions for a study (study is required)."
+        },
+        {
+          "info": { "name": "Retrieve a submission", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/submissions/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a single submission."
+        },
+        {
+          "info": { "name": "Approve or reject a submission", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/submissions/:id/transition/", "params": [ { "name": "id", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{\"action\":\"APPROVE\"}" } },
+          "docs": "Transition a submission to APPROVE or REJECT."
+        },
+        {
+          "info": { "name": "Request participant return submission", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/submissions/:id/request-return/", "params": [ { "name": "id", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{\"request_return_reasons\":[]}" } },
+          "docs": "Ask a participant to return their submission."
+        },
+        {
+          "info": { "name": "Bulk approve submissions", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/submissions/bulk-approve/", "body": { "type": "json", "data": "{}" } },
+          "docs": "Approve multiple submissions in bulk."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Participant Groups", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get all participant groups", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/participant-groups/", "params": [ { "name": "workspace_id", "value": "", "type": "query" } ] },
+          "docs": "List participant groups scoped to a workspace or project."
+        },
+        {
+          "info": { "name": "Create participant group", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/participant-groups/", "body": { "type": "json", "data": "{}" } },
+          "docs": "Create a participant group."
+        },
+        {
+          "info": { "name": "Get a participant group", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/participant-groups/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a participant group."
+        },
+        {
+          "info": { "name": "Get group participants", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/participant-groups/:id/participants/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "List participant IDs in a group."
+        },
+        {
+          "info": { "name": "Add participants to group", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/participant-groups/:id/participants/", "params": [ { "name": "id", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{\"participant_ids\":[]}" } },
+          "docs": "Add participants to a group."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Workspaces", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get user's workspaces", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/workspaces/" },
+          "docs": "List the workspaces the authenticated user belongs to."
+        },
+        {
+          "info": { "name": "Get workspace", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/workspaces/:workspace_id/", "params": [ { "name": "workspace_id", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a workspace."
+        },
+        {
+          "info": { "name": "Get workspace balance", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/workspaces/:workspace_id/balance/", "params": [ { "name": "workspace_id", "value": "", "type": "path" } ] },
+          "docs": "Read a workspace's wallet balance."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Projects", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get all projects in a workspace", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/workspaces/:workspace_id/projects/", "params": [ { "name": "workspace_id", "value": "", "type": "path" } ] },
+          "docs": "List all projects within a workspace."
+        },
+        {
+          "info": { "name": "Get project", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/projects/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a project."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Messages", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Retrieve messages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/messages/" },
+          "docs": "Get messages between you and another user or all users."
+        },
+        {
+          "info": { "name": "Send a message", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/messages/", "body": { "type": "json", "data": "{}" } },
+          "docs": "Send a message to a participant."
+        },
+        {
+          "info": { "name": "Retrieve unread messages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/messages/unread/" },
+          "docs": "Retrieve unread messages."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Hooks", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List subscribable event types", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/hooks/event-types/" },
+          "docs": "List event types you can subscribe to."
+        },
+        {
+          "info": { "name": "List all subscriptions", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/hooks/subscriptions/" },
+          "docs": "List all hook subscriptions."
+        },
+        {
+          "info": { "name": "Create a subscription", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/hooks/subscriptions/", "body": { "type": "json", "data": "{}" } },
+          "docs": "Create a hook subscription."
+        },
+        {
+          "info": { "name": "Get subscription events", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/hooks/subscriptions/:id/events/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Read delivered events for a subscription."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Filters", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List all filters", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/filters/" },
+          "docs": "List all filters (requirements) that can be applied to studies or filter sets."
+        },
+        {
+          "info": { "name": "Count participants", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/participant-counts/", "body": { "type": "json", "data": "{\"filters\":[]}" } },
+          "docs": "Count eligible participants matching a set of filters."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Bonuses", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Set up bonuses", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/submissions/bonus-payments/", "body": { "type": "json", "data": "{}" } },
+          "docs": "Create a bulk bonus payment from CSV of IDs and amounts (does not pay yet)."
+        },
+        {
+          "info": { "name": "Pay bonuses", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.prolific.com/api/v1/bulk-bonus-payments/:id/pay/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Pay a previously created bulk bonus payment (async, against wallet balance)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Users", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Retrieve the authenticated user", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/users/me/" },
+          "docs": "Retrieve the authenticated account (ID and email)."
+        },
+        {
+          "info": { "name": "Retrieve a user", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.prolific.com/api/v1/users/:id/", "params": [ { "name": "id", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a user by ID."
+        }
+      ]
+    }
+  ]
+}

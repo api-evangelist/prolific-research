@@ -1,0 +1,398 @@
+{
+  "info": {
+    "name": "Prolific API",
+    "description": "Programmatic access to the Prolific online research participant recruitment platform. Create and publish studies, review submissions, manage participant groups, projects and workspaces, apply filters/requirements, pay bonuses, message participants, and subscribe to event webhooks (hooks). Base URL: https://api.prolific.com/api/v1. All requests require an Authorization header with the value 'Token <your token>'.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "Authorization", "type": "string" },
+      { "key": "value", "value": "Token {{apiToken}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.prolific.com/api/v1", "type": "string" },
+    { "key": "apiToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Studies",
+      "item": [
+        {
+          "name": "List all studies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/studies/", "host": ["{{baseUrl}}"], "path": ["studies", ""] },
+            "description": "Lists all studies, with the option to filter by study status."
+          }
+        },
+        {
+          "name": "Create a draft study",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"My Study\",\n  \"description\": \"A short survey\",\n  \"external_study_url\": \"https://example.com/survey?PROLIFIC_PID={{%PROLIFIC_PID%}}\",\n  \"total_available_places\": 100,\n  \"reward\": 800,\n  \"estimated_completion_time\": 10\n}" },
+            "url": { "raw": "{{baseUrl}}/studies/", "host": ["{{baseUrl}}"], "path": ["studies", ""] },
+            "description": "Creates a new draft study."
+          }
+        },
+        {
+          "name": "Retrieve a study",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/studies/:id/", "host": ["{{baseUrl}}"], "path": ["studies", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieve a single study by ID."
+          }
+        },
+        {
+          "name": "Update a study",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/studies/:id/", "host": ["{{baseUrl}}"], "path": ["studies", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Update a draft study."
+          }
+        },
+        {
+          "name": "Delete a study",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/studies/:id/", "host": ["{{baseUrl}}"], "path": ["studies", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Delete a study."
+          }
+        },
+        {
+          "name": "Transition study status",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"action\": \"PUBLISH\"\n}" },
+            "url": { "raw": "{{baseUrl}}/studies/:id/transition/", "host": ["{{baseUrl}}"], "path": ["studies", ":id", "transition", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Transition a study status (PUBLISH, START, PAUSE, STOP)."
+          }
+        },
+        {
+          "name": "Show study cost",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/studies/:id/cost/", "host": ["{{baseUrl}}"], "path": ["studies", ":id", "cost", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Show the calculated cost of a study."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Submissions",
+      "item": [
+        {
+          "name": "List submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/submissions/?study={{studyId}}", "host": ["{{baseUrl}}"], "path": ["submissions", ""], "query": [{ "key": "study", "value": "{{studyId}}" }] },
+            "description": "List submissions for a study (study is required)."
+          }
+        },
+        {
+          "name": "Retrieve a submission",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/submissions/:id/", "host": ["{{baseUrl}}"], "path": ["submissions", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieve a single submission."
+          }
+        },
+        {
+          "name": "Approve or reject a submission",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"action\": \"APPROVE\"\n}" },
+            "url": { "raw": "{{baseUrl}}/submissions/:id/transition/", "host": ["{{baseUrl}}"], "path": ["submissions", ":id", "transition", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Transition a submission to APPROVE or REJECT."
+          }
+        },
+        {
+          "name": "Request participant return submission",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"request_return_reasons\": [\"TECHNICAL_ISSUE\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/submissions/:id/request-return/", "host": ["{{baseUrl}}"], "path": ["submissions", ":id", "request-return", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Ask a participant to return their submission."
+          }
+        },
+        {
+          "name": "Bulk approve submissions",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"study_id\": \"\",\n  \"submission_ids\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/submissions/bulk-approve/", "host": ["{{baseUrl}}"], "path": ["submissions", "bulk-approve", ""] },
+            "description": "Approve multiple submissions in bulk."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Participant Groups",
+      "item": [
+        {
+          "name": "Get all participant groups",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/participant-groups/?workspace_id={{workspaceId}}", "host": ["{{baseUrl}}"], "path": ["participant-groups", ""], "query": [{ "key": "workspace_id", "value": "{{workspaceId}}" }] },
+            "description": "List participant groups scoped to a workspace or project."
+          }
+        },
+        {
+          "name": "Create participant group",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Returning participants\",\n  \"project_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/participant-groups/", "host": ["{{baseUrl}}"], "path": ["participant-groups", ""] },
+            "description": "Create a participant group."
+          }
+        },
+        {
+          "name": "Get a participant group",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/participant-groups/:id/", "host": ["{{baseUrl}}"], "path": ["participant-groups", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieve a participant group."
+          }
+        },
+        {
+          "name": "Get group participants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/participant-groups/:id/participants/", "host": ["{{baseUrl}}"], "path": ["participant-groups", ":id", "participants", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "List participant IDs in a group."
+          }
+        },
+        {
+          "name": "Add participants to group",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"participant_ids\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/participant-groups/:id/participants/", "host": ["{{baseUrl}}"], "path": ["participant-groups", ":id", "participants", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Add participants to a group."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workspaces",
+      "item": [
+        {
+          "name": "Get user's workspaces",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/workspaces/", "host": ["{{baseUrl}}"], "path": ["workspaces", ""] },
+            "description": "List the workspaces the authenticated user belongs to."
+          }
+        },
+        {
+          "name": "Get workspace",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/workspaces/:workspace_id/", "host": ["{{baseUrl}}"], "path": ["workspaces", ":workspace_id", ""], "variable": [{ "key": "workspace_id", "value": "" }] },
+            "description": "Retrieve a workspace."
+          }
+        },
+        {
+          "name": "Get workspace balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/workspaces/:workspace_id/balance/", "host": ["{{baseUrl}}"], "path": ["workspaces", ":workspace_id", "balance", ""], "variable": [{ "key": "workspace_id", "value": "" }] },
+            "description": "Read a workspace's wallet balance."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get all projects in a workspace",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/workspaces/:workspace_id/projects/", "host": ["{{baseUrl}}"], "path": ["workspaces", ":workspace_id", "projects", ""], "variable": [{ "key": "workspace_id", "value": "" }] },
+            "description": "List all projects within a workspace."
+          }
+        },
+        {
+          "name": "Get project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/projects/:id/", "host": ["{{baseUrl}}"], "path": ["projects", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieve a project."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Retrieve messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/messages/", "host": ["{{baseUrl}}"], "path": ["messages", ""] },
+            "description": "Get messages between you and another user or all users."
+          }
+        },
+        {
+          "name": "Send a message",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"recipient_id\": \"\",\n  \"body\": \"Thanks for taking part!\",\n  \"study_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/messages/", "host": ["{{baseUrl}}"], "path": ["messages", ""] },
+            "description": "Send a message to a participant."
+          }
+        },
+        {
+          "name": "Retrieve unread messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/messages/unread/", "host": ["{{baseUrl}}"], "path": ["messages", "unread", ""] },
+            "description": "Retrieve unread messages."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hooks",
+      "item": [
+        {
+          "name": "List subscribable event types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/hooks/event-types/", "host": ["{{baseUrl}}"], "path": ["hooks", "event-types", ""] },
+            "description": "List event types you can subscribe to."
+          }
+        },
+        {
+          "name": "List all subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/hooks/subscriptions/", "host": ["{{baseUrl}}"], "path": ["hooks", "subscriptions", ""] },
+            "description": "List all hook subscriptions."
+          }
+        },
+        {
+          "name": "Create a subscription",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"event_type\": \"submission.status.change\",\n  \"target_url\": \"https://example.com/webhook\",\n  \"workspace_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/hooks/subscriptions/", "host": ["{{baseUrl}}"], "path": ["hooks", "subscriptions", ""] },
+            "description": "Create a hook subscription."
+          }
+        },
+        {
+          "name": "Get subscription events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/hooks/subscriptions/:id/events/", "host": ["{{baseUrl}}"], "path": ["hooks", "subscriptions", ":id", "events", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Read delivered events for a subscription."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filters",
+      "item": [
+        {
+          "name": "List all filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/filters/", "host": ["{{baseUrl}}"], "path": ["filters", ""] },
+            "description": "List all filters (requirements) that can be applied to studies or filter sets."
+          }
+        },
+        {
+          "name": "Count participants",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"filters\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/participant-counts/", "host": ["{{baseUrl}}"], "path": ["participant-counts", ""] },
+            "description": "Count eligible participants matching a set of filters."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bonuses",
+      "item": [
+        {
+          "name": "Set up bonuses",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"study_id\": \"\",\n  \"csv_bonuses\": \"60d9aadeb86739de712faee0,1.50\"\n}" },
+            "url": { "raw": "{{baseUrl}}/submissions/bonus-payments/", "host": ["{{baseUrl}}"], "path": ["submissions", "bonus-payments", ""] },
+            "description": "Create a bulk bonus payment from CSV of IDs and amounts (does not pay yet)."
+          }
+        },
+        {
+          "name": "Pay bonuses",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/bulk-bonus-payments/:id/pay/", "host": ["{{baseUrl}}"], "path": ["bulk-bonus-payments", ":id", "pay", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Pay a previously created bulk bonus payment (async, against wallet balance)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Retrieve the authenticated user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/users/me/", "host": ["{{baseUrl}}"], "path": ["users", "me", ""] },
+            "description": "Retrieve the authenticated account (ID and email)."
+          }
+        },
+        {
+          "name": "Retrieve a user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/users/:id/", "host": ["{{baseUrl}}"], "path": ["users", ":id", ""], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieve a user by ID."
+          }
+        }
+      ]
+    }
+  ]
+}

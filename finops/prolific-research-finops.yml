@@ -1,0 +1,101 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Prolific
+providerId: prolific-research
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Research
+- Participant Recruitment
+- Human Data
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Prolific spend. Prolific is pay-as-you-go with no subscription:
+  you prefund a workspace wallet and each published study debits participant
+  rewards plus a platform fee (a percentage of rewards - 42.8% corporate, 33.3%
+  academic/non-profit as of the review date). Bonus payments and returned/rejected
+  submission handling also draw on the wallet. The dominant, controllable cost
+  drivers are reward per participant, estimated completion time, number of
+  participant places, screening filters (which change eligible pool size and
+  price), and bonuses. The API bills the same wallet as the web app.
+notes: >-
+  Platform-fee percentages, minimum rewards, and currency handling change over
+  time and by customer type/region; verify on the pricing page and calculator.
+  Costs are incurred at study publish (funds are locked) and settled as
+  submissions are approved.
+sources:
+- https://www.prolific.com/pricing
+- https://www.prolific.com/calculator
+- https://researcher-help.prolific.com/en/articles/445129-study-cost
+- https://docs.prolific.com/api-reference/studies
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Prolific
+serviceCategory: Research and Human Data
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: On-Demand (wallet prefund)
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Prolific
+  ServiceCategory: Research and Human Data
+  ProviderName: Prolific
+  PublisherName: Prolific
+  InvoiceIssuerName: Prolific
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: participant_rewards
+  description: Rewards paid to participants for completed submissions, set per study.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - workspace
+  - project
+  - study
+- name: platform_fee
+  description: Platform fee charged as a percentage of participant rewards (42.8% corporate / 33.3% academic).
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - workspace
+  - study
+- name: bonus_payments
+  description: Discretionary bonus payments to participants for exceptional or follow-up work.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - workspace
+  - study
+- name: eligible_participants
+  description: Size of the eligible participant pool after applying screening filters (affects reach and cost).
+  unit: participants
+  aggregation: max
+  dimensions:
+  - study
+principles:
+- name: Visibility
+  description: Track reward, platform fee, and bonus spend per study/project/workspace via the study cost and workspace balance/cost-breakdown endpoints.
+- name: Allocation
+  description: Use workspaces and projects to map research spend to teams, grants, or cost centers.
+- name: Optimization
+  description: Right-size reward for estimated completion time, tighten screening filters to avoid over-recruiting, and use participant groups to re-contact known participants efficiently.
+- name: Accountability
+  description: Prefund wallets per workspace, review study cost before publishing (funds are locked at publish), and reconcile approved vs returned/rejected submissions.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

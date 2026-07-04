@@ -1,0 +1,125 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Prolific
+providerId: prolific-research
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Research
+- Participant Recruitment
+- Surveys
+- Human Data
+- Plans
+description: >-
+  Prolific is pay-as-you-go: there is no subscription or contract required to use
+  the platform or its API. You fund a workspace wallet and pay participant rewards
+  plus a platform fee charged as a percentage on top of those rewards. As of the
+  review date the platform fee is 42.8% of participant rewards for corporate/commercial
+  customers and 33.3% for academic and non-profit customers. Participants receive
+  the full reward you set; the fee is added on top. Prolific enforces a minimum
+  reward of GBP 6.00 / USD 8.00 per hour and recommends at least GBP 9.00 / USD 12.00
+  per hour. Managed research services (recruitment, study design, data collection)
+  are custom-priced. The API itself carries no separate fee - it bills the same
+  wallet as the web app.
+notes: >-
+  Platform-fee percentages and minimum rewards change over time and vary by
+  customer type and region; verify current numbers on the Prolific pricing page
+  and calculator during reconciliation. AI Task Builder and managed services may
+  have distinct commercial terms.
+sources:
+- https://www.prolific.com/pricing
+- https://www.prolific.com/calculator
+- https://researcher-help.prolific.com/en/articles/445239-what-is-your-pricing
+- https://docs.prolific.com/api-reference/introduction/basic
+plans:
+- id: prolific-pay-as-you-go-corporate
+  name: Pay-as-you-go (Corporate)
+  type: usage
+  description: >-
+    Self-serve access for commercial/corporate researchers. No subscription. You
+    pay participant rewards plus a platform fee of 42.8% of rewards. Full access
+    to the API (studies, submissions, participant groups, filters, hooks, bonuses).
+  entries:
+  - label: Platform Fee (Corporate)
+    name: platform_fee_corporate
+    type: usage
+    metric: percent_of_reward
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 42.8% of participant rewards
+    userMultiplied: false
+  - label: Participant Reward Minimum
+    name: reward_minimum
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: min $8.00/hr (recommended $12.00/hr), paid to participants
+    userMultiplied: true
+  elements:
+  - name: Full API Access
+  - name: Studies, Submissions, Bonuses
+  - name: Participant Groups and Filters
+  - name: Webhooks (Hooks)
+- id: prolific-pay-as-you-go-academic
+  name: Pay-as-you-go (Academic / Non-Profit)
+  type: usage
+  description: >-
+    Discounted platform fee for verified academic and non-profit researchers. No
+    subscription. You pay participant rewards plus a platform fee of 33.3% of
+    rewards, with the same full API access.
+  entries:
+  - label: Platform Fee (Academic/Non-Profit)
+    name: platform_fee_academic
+    type: usage
+    metric: percent_of_reward
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 33.3% of participant rewards
+    userMultiplied: false
+  - label: Participant Reward Minimum
+    name: reward_minimum_academic
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: min $8.00/hr (recommended $12.00/hr), paid to participants
+    userMultiplied: true
+  elements:
+  - name: Full API Access
+  - name: Reduced Platform Fee
+- id: prolific-managed-services
+  name: Managed Research Services
+  type: enterprise
+  description: >-
+    Custom, quote-based engagements where Prolific's research team handles
+    recruitment, study design, quality assurance, and data collection for
+    large-scale or specialized projects (including AI data / annotation).
+  entries:
+  - label: Custom Engagement
+    name: managed_services
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Managed Recruitment
+  - name: Study Design and QA
+  - name: Custom Volume Pricing
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

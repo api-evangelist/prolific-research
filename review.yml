@@ -1,0 +1,159 @@
+aid: prolific-research
+name: Prolific
+review:
+  question: Does Prolific expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-04'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Prolific's public developer surface is a
+    versioned request/response REST API (base https://api.prolific.com/api/v1)
+    authenticated with an API token. Prolific delivers asynchronous, event-driven
+    notifications to researchers through Hooks (webhooks): Prolific POSTs a signed
+    HTTP payload to a researcher-configured target_url when subscribed events
+    occur (e.g. submission status changes, study status changes). That is
+    server-to-endpoint HTTP with HMAC-SHA256 signatures (X-Prolific-Request-Signature
+    / X-Prolific-Request-Timestamp) and exponential-backoff retries - not a
+    persistent WebSocket or SSE channel on Prolific's own API. There is no
+    server-push streaming transport on Prolific's API to model with AsyncAPI.
+findings:
+  summary: |
+    Prolific does not publish a documented public WebSocket API. Prolific is an
+    online research participant recruitment platform. Its public API is a
+    standard, versioned REST interface at https://api.prolific.com/api/v1,
+    authenticated with an API token supplied in the Authorization header as
+    "Token <your token>". Every documented resource - studies, submissions,
+    participant groups, projects, workspaces, messages, hooks, filters, bonuses,
+    users - is accessed over request/response HTTPS using a collection endpoint
+    (GET list / POST create) and an element endpoint (GET / PATCH / DELETE).
+    Asynchronous event notification is provided by Hooks (webhooks), where
+    Prolific calls a researcher-supplied HTTPS endpoint on events; this is not a
+    WebSocket. No ws:// or wss:// endpoint is documented anywhere in the Prolific
+    API reference as of the review date.
+  openSource: |
+    Prolific's core platform and API are proprietary/closed source and run as a
+    hosted SaaS. Prolific does maintain a public GitHub organization
+    (github.com/prolific-oss) with open-source developer tooling and examples -
+    notably an experimental CLI (prolific-oss/cli) and several getting-started
+    examples (external study link, survey, AI Task Builder) that call the public
+    REST API. These are client tools, not the platform itself.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.prolific.com/api/v1
+      documented: true
+      note: Versioned request/response REST for all resources. API token auth via Authorization Token header.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Hooks POST signed event payloads (HMAC-SHA256) to a researcher-configured target_url. Server-to-endpoint HTTP, retried with exponential backoff; not a WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Prolific API reference as of the review date.
+  endpointsConfirmed:
+    - GET    https://api.prolific.com/api/v1/studies/
+    - GET    https://api.prolific.com/api/v1/submissions/
+    - GET    https://api.prolific.com/api/v1/participant-groups/
+    - GET    https://api.prolific.com/api/v1/filters/
+    - GET    https://api.prolific.com/api/v1/workspaces/{workspace_id}/
+    - GET    https://api.prolific.com/api/v1/workspaces/{workspace_id}/projects/
+    - GET    https://api.prolific.com/api/v1/messages/
+    - GET    https://api.prolific.com/api/v1/users/me/
+    - POST   https://api.prolific.com/api/v1/submissions/bonus-payments/
+    - POST   https://api.prolific.com/api/v1/bulk-bonus-payments/{id}/pay/
+  endpointsModeled:
+    - POST   https://api.prolific.com/api/v1/studies/
+    - GET    https://api.prolific.com/api/v1/studies/{id}/
+    - PATCH  https://api.prolific.com/api/v1/studies/{id}/
+    - DELETE https://api.prolific.com/api/v1/studies/{id}/
+    - POST   https://api.prolific.com/api/v1/studies/{id}/transition/
+    - GET    https://api.prolific.com/api/v1/studies/{id}/cost/
+    - GET    https://api.prolific.com/api/v1/submissions/{id}/
+    - POST   https://api.prolific.com/api/v1/submissions/{id}/transition/
+    - POST   https://api.prolific.com/api/v1/submissions/{id}/request-return/
+    - POST   https://api.prolific.com/api/v1/submissions/bulk-approve/
+    - POST   https://api.prolific.com/api/v1/participant-groups/
+    - GET    https://api.prolific.com/api/v1/participant-groups/{id}/
+    - PATCH  https://api.prolific.com/api/v1/participant-groups/{id}/
+    - DELETE https://api.prolific.com/api/v1/participant-groups/{id}/
+    - GET    https://api.prolific.com/api/v1/participant-groups/{id}/participants/
+    - POST   https://api.prolific.com/api/v1/participant-groups/{id}/participants/
+    - GET    https://api.prolific.com/api/v1/workspaces/
+    - POST   https://api.prolific.com/api/v1/workspaces/
+    - PATCH  https://api.prolific.com/api/v1/workspaces/{workspace_id}/
+    - GET    https://api.prolific.com/api/v1/workspaces/{workspace_id}/balance/
+    - POST   https://api.prolific.com/api/v1/workspaces/{workspace_id}/projects/
+    - GET    https://api.prolific.com/api/v1/projects/{id}/
+    - PATCH  https://api.prolific.com/api/v1/projects/{id}/
+    - POST   https://api.prolific.com/api/v1/messages/
+    - GET    https://api.prolific.com/api/v1/messages/unread/
+    - GET    https://api.prolific.com/api/v1/hooks/event-types/
+    - GET    https://api.prolific.com/api/v1/hooks/secrets/
+    - POST   https://api.prolific.com/api/v1/hooks/secrets/
+    - GET    https://api.prolific.com/api/v1/hooks/subscriptions/
+    - POST   https://api.prolific.com/api/v1/hooks/subscriptions/
+    - GET    https://api.prolific.com/api/v1/hooks/subscriptions/{id}/
+    - PATCH  https://api.prolific.com/api/v1/hooks/subscriptions/{id}/
+    - DELETE https://api.prolific.com/api/v1/hooks/subscriptions/{id}/
+    - POST   https://api.prolific.com/api/v1/hooks/subscriptions/{id}/confirm/
+    - GET    https://api.prolific.com/api/v1/hooks/subscriptions/{id}/events/
+    - GET    https://api.prolific.com/api/v1/filters/{filter_id}/distribution/
+    - POST   https://api.prolific.com/api/v1/participant-counts/
+    - GET    https://api.prolific.com/api/v1/users/{id}/
+sources:
+  - url: https://docs.prolific.com/api-reference
+    type: Documentation
+    note: API reference home; resource groups Studies, Submissions, Bonuses, Messages, Workspaces, Participant Groups, Hooks, Filters, Projects, Users, Surveys, AI Task Builder.
+  - url: https://docs.prolific.com/api-reference/introduction/basic
+    type: Documentation
+    note: Base URL https://api.prolific.com/api/v1, REST collection/element pattern, optional Referer header.
+  - url: https://docs.prolific.com/api-reference/studies/get-studies
+    type: APIReference
+    note: Confirmed GET /api/v1/studies/ with Authorization Token auth.
+  - url: https://docs.prolific.com/api-reference/submissions/get-submissions
+    type: APIReference
+    note: Confirmed GET /api/v1/submissions/ requiring a study query param.
+  - url: https://docs.prolific.com/api-reference/participant-groups
+    type: APIReference
+    note: Confirmed GET /api/v1/participant-groups/ scoped to workspace_id/project_id.
+  - url: https://docs.prolific.com/api-reference/filters/get-filters
+    type: APIReference
+    note: Confirmed GET /api/v1/filters/.
+  - url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+    type: APIReference
+    note: Confirmed GET /api/v1/workspaces/{workspace_id}/.
+  - url: https://docs.prolific.com/api-reference/projects/get-projects
+    type: APIReference
+    note: Confirmed GET /api/v1/workspaces/{workspace_id}/projects/.
+  - url: https://docs.prolific.com/api-reference/messages/get-messages
+    type: APIReference
+    note: Confirmed GET /api/v1/messages/.
+  - url: https://docs.prolific.com/api-reference/users/get-user
+    type: APIReference
+    note: Confirmed GET /api/v1/users/me/ returning ID and email.
+  - url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+    type: APIReference
+    note: Confirmed POST /api/v1/submissions/bonus-payments/ then POST /api/v1/bulk-bonus-payments/{id}/pay/ (up to 200 participants).
+  - url: https://docs.prolific.com/api-reference/webhooks/verifying
+    type: Documentation
+    note: Hooks are signed HTTP webhooks (X-Prolific-Request-Signature / X-Prolific-Request-Timestamp, HMAC-SHA256). Not a WebSocket.
+  - url: https://docs.prolific.com/documentation/core-concepts/managing-high-loads
+    type: Documentation
+    note: No fixed rate limits; implicit contention on the workspace wallet; 429 with Retry-After / backoff guidance.
+  - url: https://www.prolific.com/pricing
+    type: Pricing
+    note: Pay-as-you-go; platform fee 42.8% corporate / 33.3% academic on top of participant rewards.
+  - url: https://github.com/prolific-oss
+    type: SourceCode
+    note: Public GitHub org with open-source CLI and getting-started examples that call the REST API.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists on Prolific's own API. The public API is
+    request/response REST, and its only asynchronous transport is Hooks
+    (server-to-endpoint HTTP webhooks with HMAC-SHA256 signatures), which is
+    modeled as a REST/webhook resource rather than an AsyncAPI server-push
+    document. No AsyncAPI file was created.

@@ -1,0 +1,69 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Prolific
+providerId: prolific-research
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Research
+- Participant Recruitment
+- Rate Limiting
+- Quotas
+description: >-
+  Prolific does not publish fixed numeric per-second or per-minute request limits
+  for its API. Instead, limits are implicit and arise from contention on shared
+  resources - primarily the workspace wallet. Payment operations (submission
+  approvals and bonus payments) are the most prone to 429 Too Many Requests
+  responses because they verify and debit the shared balance concurrently. The
+  Studies API additionally applies rate limits designed to prevent researchers
+  from launching too many studies with very low participant counts. Prolific
+  recommends keeping concurrent active studies under roughly 100 per workspace.
+notes: >-
+  No specific requests-per-second thresholds are documented as of the review
+  date. On 429, honor a Retry-After header if present; otherwise use exponential
+  backoff starting at ~1s, doubling up to ~60s, with jitter, and stop after 5-6
+  attempts. Verify current guidance on the Managing high loads documentation.
+sources:
+- https://docs.prolific.com/documentation/core-concepts/managing-high-loads
+- https://docs.prolific.com/api-reference/studies
+- https://docs.prolific.com/api-reference/introduction/basic
+responseCodes:
+  throttled: 429
+limits:
+- name: General API Requests
+  scope: account
+  metric: requests
+  limit: not published (implicit, resource-contention based)
+  notes: No fixed numeric request-rate limit; throttling arises from shared-resource contention.
+- name: Wallet / Payment Operations
+  scope: workspace
+  metric: requests
+  limit: implicit
+  notes: Approvals and bonus payments contend on the workspace wallet and are the most likely to receive 429.
+- name: Study Launches
+  scope: account
+  metric: studies
+  limit: rate-limited for low-participant studies
+  notes: The Studies API limits launching many studies with low numbers of participants.
+- name: Concurrent Active Studies
+  scope: workspace
+  metric: studies
+  limit: recommended < 100
+  notes: Prolific recommends keeping concurrent active studies under ~100 per workspace.
+- name: Bulk Bonus Payments
+  scope: study
+  metric: participants
+  limit: 200 per request
+  notes: A single bulk bonus payment can target up to 200 participants.
+policies:
+- name: Retry-After
+  description: When present on a 429 response, honor the Retry-After header before retrying.
+- name: Backoff Strategy
+  description: Use exponential backoff starting at ~1s, doubling up to ~60s, with random jitter (+/- 20%), stopping after 5-6 attempts.
+- name: Prefer Hooks Over Polling
+  description: Subscribe to Hooks for study/submission events rather than polling the API to avoid unnecessary request volume.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
