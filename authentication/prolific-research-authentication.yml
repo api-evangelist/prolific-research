@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/prolific-research-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: tokenAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: API token supplied as "Token <your token>".
+  sources:
+  - openapi/prolific-research-openapi.yml
