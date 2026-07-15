@@ -246,6 +246,8 @@ apis:
     email, retrieve a user, and read user identity information used to scope workspaces,
     projects, and API token access.
 common:
+- type: AgenticAccess
+  url: agentic-access/prolific-research-agentic-access.yml
 - type: DomainSecurity
   url: security/prolific-research-domain-security.yml
 - type: Authentication
