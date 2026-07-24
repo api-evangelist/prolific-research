@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: Prolific Bonuses Hooks API
+  description: 'The Prolific API is a versioned REST interface for the Prolific online research participant recruitment platform. Researchers use it to programmatically create and publish studies, review and approve submissions, manage participant groups, projects and workspaces, apply demographic filters and requirements, pay bonuses, message participants, and subscribe to event webhooks (hooks). The API is served from https://api.prolific.com/api/v1 and follows a standard REST pattern: a collection endpoint (.../resource/) for GET (list) and POST (create), and an element endpoint (.../resource/{id}/) for GET, PATCH/PUT, and DELETE. All requests are authenticated with an API token supplied in the Authorization header as "Token <your token>".'
+  version: v1
+  contact:
+    name: Prolific
+    url: https://docs.prolific.com/api-reference
+  license:
+    name: Proprietary
+    url: https://www.prolific.com/terms
+servers:
+- url: https://api.prolific.com/api/v1
+  description: Prolific API v1
+security:
+- tokenAuth: []
+tags:
+- name: Hooks
+  description: Event webhook subscriptions and signing secrets.
+paths:
+  /hooks/event-types/:
+    get:
+      operationId: listEventTypes
+      tags:
+      - Hooks
+      summary: List subscribable event types
+      responses:
+        '200':
+          description: A list of event types.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hooks/secrets/:
+    get:
+      operationId: listSecrets
+      tags:
+      - Hooks
+      summary: List all secrets
+      responses:
+        '200':
+          description: A list of signing secrets.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSecret
+      tags:
+      - Hooks
+      summary: Create or replace a secret
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workspace_id:
+                  type: string
+      responses:
+        '201':
+          description: The created secret.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hooks/subscriptions/:
+    get:
+      operationId: listSubscriptions
+      tags:
+      - Hooks
+      summary: List all subscriptions
+      responses:
+        '200':
+          description: A list of subscriptions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSubscription
+      tags:
+      - Hooks
+      summary: Create a subscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionInput'
+      responses:
+        '201':
+          description: The created subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hooks/subscriptions/{id}/:
+    parameters:
+    - $ref: '#/components/parameters/SubscriptionId'
+    get:
+      operationId: getSubscription
+      tags:
+      - Hooks
+      summary: Retrieve a subscription
+      responses:
+        '200':
+          description: A subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      operationId: updateSubscription
+      tags:
+      - Hooks
+      summary: Update a subscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionInput'
+      responses:
+        '200':
+          description: The updated subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteSubscription
+      tags:
+      - Hooks
+      summary: Delete a subscription
+      responses:
+        '204':
+          description: The subscription was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hooks/subscriptions/{id}/confirm/:
+    parameters:
+    - $ref: '#/components/parameters/SubscriptionId'
+    post:
+      operationId: confirmSubscription
+      tags:
+      - Hooks
+      summary: Confirm a subscription
+      responses:
+        '200':
+          description: The subscription was confirmed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hooks/subscriptions/{id}/events/:
+    parameters:
+    - $ref: '#/components/parameters/SubscriptionId'
+    get:
+      operationId: getSubscriptionEvents
+      tags:
+      - Hooks
+      summary: Get subscription events
+      responses:
+        '200':
+          description: Delivered events for the subscription.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    SubscriptionId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The hook subscription ID.
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            detail:
+              type: string
+            error_code:
+              type: integer
+    SubscriptionList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+    SubscriptionInput:
+      type: object
+      properties:
+        event_type:
+          type: string
+        target_url:
+          type: string
+        workspace_id:
+          type: string
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+        event_type:
+          type: string
+        target_url:
+          type: string
+        is_enabled:
+          type: boolean
+        workspace_id:
+          type: string
+  responses:
+    Unauthorized:
+      description: Authentication credentials were missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API token supplied as "Token <your token>".

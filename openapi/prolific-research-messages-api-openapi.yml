@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Prolific Bonuses Messages API
+  description: 'The Prolific API is a versioned REST interface for the Prolific online research participant recruitment platform. Researchers use it to programmatically create and publish studies, review and approve submissions, manage participant groups, projects and workspaces, apply demographic filters and requirements, pay bonuses, message participants, and subscribe to event webhooks (hooks). The API is served from https://api.prolific.com/api/v1 and follows a standard REST pattern: a collection endpoint (.../resource/) for GET (list) and POST (create), and an element endpoint (.../resource/{id}/) for GET, PATCH/PUT, and DELETE. All requests are authenticated with an API token supplied in the Authorization header as "Token <your token>".'
+  version: v1
+  contact:
+    name: Prolific
+    url: https://docs.prolific.com/api-reference
+  license:
+    name: Proprietary
+    url: https://www.prolific.com/terms
+servers:
+- url: https://api.prolific.com/api/v1
+  description: Prolific API v1
+security:
+- tokenAuth: []
+tags:
+- name: Messages
+  description: Communicate with participants.
+paths:
+  /messages/:
+    get:
+      operationId: getMessages
+      tags:
+      - Messages
+      summary: Retrieve messages
+      description: Get messages between you and another user, or your messages with all users.
+      parameters:
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: created_after
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: A list of messages.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: sendMessage
+      tags:
+      - Messages
+      summary: Send a message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipient_id:
+                  type: string
+                body:
+                  type: string
+                study_id:
+                  type: string
+      responses:
+        '201':
+          description: The message was sent.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /messages/unread/:
+    get:
+      operationId: getUnreadMessages
+      tags:
+      - Messages
+      summary: Retrieve unread messages
+      responses:
+        '200':
+          description: A list of unread messages.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            detail:
+              type: string
+            error_code:
+              type: integer
+  responses:
+    Unauthorized:
+      description: Authentication credentials were missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API token supplied as "Token <your token>".

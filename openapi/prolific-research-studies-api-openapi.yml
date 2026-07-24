@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  title: Prolific Bonuses Studies API
+  description: 'The Prolific API is a versioned REST interface for the Prolific online research participant recruitment platform. Researchers use it to programmatically create and publish studies, review and approve submissions, manage participant groups, projects and workspaces, apply demographic filters and requirements, pay bonuses, message participants, and subscribe to event webhooks (hooks). The API is served from https://api.prolific.com/api/v1 and follows a standard REST pattern: a collection endpoint (.../resource/) for GET (list) and POST (create), and an element endpoint (.../resource/{id}/) for GET, PATCH/PUT, and DELETE. All requests are authenticated with an API token supplied in the Authorization header as "Token <your token>".'
+  version: v1
+  contact:
+    name: Prolific
+    url: https://docs.prolific.com/api-reference
+  license:
+    name: Proprietary
+    url: https://www.prolific.com/terms
+servers:
+- url: https://api.prolific.com/api/v1
+  description: Prolific API v1
+security:
+- tokenAuth: []
+tags:
+- name: Studies
+  description: Create, publish, and manage research studies.
+paths:
+  /studies/:
+    get:
+      operationId: listStudies
+      tags:
+      - Studies
+      summary: List all studies
+      description: Lists all studies, with the option to filter by study status.
+      parameters:
+      - name: state
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter studies by status (e.g. UNPUBLISHED, ACTIVE, COMPLETED).
+      responses:
+        '200':
+          description: A paginated list of studies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createStudy
+      tags:
+      - Studies
+      summary: Create a draft study
+      description: Creates a new draft study. Publishing is a separate transition step.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyInput'
+      responses:
+        '201':
+          description: The created draft study.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Study'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /studies/{id}/:
+    parameters:
+    - $ref: '#/components/parameters/StudyId'
+    get:
+      operationId: getStudy
+      tags:
+      - Studies
+      summary: Retrieve a study
+      responses:
+        '200':
+          description: A study.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Study'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      operationId: updateStudy
+      tags:
+      - Studies
+      summary: Update a study
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyInput'
+      responses:
+        '200':
+          description: The updated study.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Study'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteStudy
+      tags:
+      - Studies
+      summary: Delete a study
+      responses:
+        '204':
+          description: The study was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /studies/{id}/transition/:
+    parameters:
+    - $ref: '#/components/parameters/StudyId'
+    post:
+      operationId: transitionStudy
+      tags:
+      - Studies
+      summary: Transition study status
+      description: Change the status of a study, e.g. PUBLISH a draft, START, PAUSE, or STOP an active study.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                  - PUBLISH
+                  - START
+                  - PAUSE
+                  - STOP
+      responses:
+        '200':
+          description: The study in its new status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Study'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /studies/{id}/cost/:
+    parameters:
+    - $ref: '#/components/parameters/StudyId'
+    get:
+      operationId: getStudyCost
+      tags:
+      - Studies
+      summary: Show study cost
+      description: Returns the calculated cost of a study including participant rewards and platform fee.
+      responses:
+        '200':
+          description: Study cost breakdown.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            detail:
+              type: string
+            error_code:
+              type: integer
+    StudyList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Study'
+        _links:
+          type: object
+    Study:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        internal_name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        external_study_url:
+          type: string
+        total_available_places:
+          type: integer
+        reward:
+          type: integer
+          description: Reward per participant in the study currency's minor units.
+        estimated_completion_time:
+          type: integer
+        project:
+          type: string
+        filters:
+          type: array
+          items:
+            type: object
+    StudyInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        external_study_url:
+          type: string
+        total_available_places:
+          type: integer
+        reward:
+          type: integer
+        estimated_completion_time:
+          type: integer
+        project:
+          type: string
+        filters:
+          type: array
+          items:
+            type: object
+  parameters:
+    StudyId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The study ID.
+  responses:
+    Unauthorized:
+      description: Authentication credentials were missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API token supplied as "Token <your token>".
