@@ -9,7 +9,20 @@ description: Prolific is an online research participant recruitment platform tha
   programmatically create and publish studies, review and approve submissions, manage
   participant groups, projects and workspaces, apply demographic filters and requirements,
   pay bonuses, message participants, and subscribe to event webhooks (hooks).
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/prolific-research.png
 tags:
 - Research
 - Participant Recruitment
@@ -22,229 +35,486 @@ created: '2026-07-04'
 modified: '2026-07-04'
 specificationVersion: '0.19'
 apis:
-- aid: prolific-research:prolific-research-studies-api
-  name: Prolific Studies API
-  tags:
-  - Studies
-  - Recruitment
-  - Publishing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/studies
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/studies
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/studies/get-studies
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Create draft studies, list and retrieve studies (optionally by project),
-    update, delete, calculate and show cost, duplicate, and transition study status
-    (publish, start, pause, stop) to recruit participants for a survey or task.
-- aid: prolific-research:prolific-research-submissions-api
-  name: Prolific Submissions API
-  tags:
-  - Submissions
-  - Approvals
-  - Reviews
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/submissions
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/submissions
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/submissions/get-submissions
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: List submissions for a study, retrieve a submission, transition a submission
-    (approve or reject), request that a participant return their submission, and bulk
-    approve submissions once a participant has completed a study.
-- aid: prolific-research:prolific-research-participant-groups-api
-  name: Prolific Participant Groups API
-  tags:
-  - Participant Groups
-  - Allowlist
-  - Panels
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/participant-groups
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/participant-groups
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Create and manage saved, dynamic groups of participant IDs so you can
-    re-contact the same participants across studies - list, get, update, and delete
-    groups, and add or remove participants used as allowlist or blocklist filters.
-- aid: prolific-research:prolific-research-projects-api
-  name: Prolific Projects API
-  tags:
-  - Projects
-  - Organization
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/projects/get-projects
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/projects/get-projects
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Organize studies within a workspace by project - list all projects in
-    a workspace, create a project, retrieve a project, and update a project, including
-    managing project members and access.
-- aid: prolific-research:prolific-research-workspaces-api
-  name: Prolific Workspaces API
-  tags:
-  - Workspaces
-  - Balance
-  - Billing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/workspaces/get-workspace
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/workspaces/get-workspace
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: List and create workspaces, retrieve and update a workspace, and read
-    a workspace's wallet balance and cost breakdown - the top-level container that
-    holds projects, funds studies, and scopes team collaboration.
-- aid: prolific-research:prolific-research-messages-api
-  name: Prolific Messages API
-  tags:
-  - Messages
-  - Communication
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/messages
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/messages
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/messages/get-messages
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Retrieve messages between you and participants, send a message to an
-    individual participant, send to multiple participants or to a participant group,
-    and retrieve unread messages to send reminders, thank participants, or answer questions.
-- aid: prolific-research:prolific-research-hooks-api
-  name: Prolific Hooks (Webhooks) API
-  tags:
-  - Webhooks
-  - Hooks
-  - Events
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/webhooks
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/webhooks
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/webhooks/verifying
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Subscribe to Prolific events (such as submission.status.change and study.status.change)
-    instead of polling - list subscribable event types, manage signing secrets, create,
-    retrieve, confirm, update, and delete subscriptions, and read delivered events.
-    Hook deliveries are HMAC-SHA256 signed via X-Prolific-Request-Signature.
-- aid: prolific-research:prolific-research-requirements-filters-api
-  name: Prolific Requirements & Filters API
-  tags:
-  - Filters
-  - Requirements
-  - Prescreening
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/filters/filters-overview
-  baseURL: https://api.prolific.com/api/v1
-  properties:
-  - url: https://docs.prolific.com/api-reference/filters/filters-overview
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/filters/get-filters
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: List all demographic and screening filters (requirements) that can be
-    applied to a study or filter set, read a filter's distribution, and count how many
-    eligible participants match a set of filters before publishing a study.
 - aid: prolific-research:prolific-research-bonuses-api
   name: Prolific Bonuses API
+  description: Bulk bonus payments to participants.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
   tags:
   - Bonuses
-  - Payments
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/bonuses
-  baseURL: https://api.prolific.com/api/v1
   properties:
-  - url: https://docs.prolific.com/api-reference/bonuses
-    type: Documentation
-  - url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Reward exceptional or follow-up work with bonus payments - set up bulk
-    bonus payments for a study from CSV of participant/submission IDs and amounts (up
-    to 200 participants per request), then pay them asynchronously against your workspace
-    balance.
+  - type: OpenAPI
+    url: openapi/prolific-research-bonuses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-filters-api
+  name: Prolific Filters API
+  description: Demographic and screening requirements and eligibility counts.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Filters
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-filters-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-hooks-api
+  name: Prolific Hooks API
+  description: Event webhook subscriptions and signing secrets.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Hooks
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-hooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-messages-api
+  name: Prolific Messages API
+  description: Communicate with participants.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-messages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-participant-groups-api
+  name: Prolific Participant Groups API
+  description: Saved, dynamic groups of participant IDs used as allowlist/blocklist filters.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Participant Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-participant-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-projects-api
+  name: Prolific Projects API
+  description: Organize studies within a workspace.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-studies-api
+  name: Prolific Studies API
+  description: Create, publish, and manage research studies.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Studies
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-studies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-submissions-api
+  name: Prolific Submissions API
+  description: Review, approve, reject, and return participant submissions.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Submissions
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-submissions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
 - aid: prolific-research:prolific-research-users-api
   name: Prolific Users API
+  description: Authenticated account and user identity.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
   tags:
   - Users
-  - Account
-  - Identity
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.prolific.com/api-reference/users/get-user
-  baseURL: https://api.prolific.com/api/v1
   properties:
-  - url: https://docs.prolific.com/api-reference/users/get-user
-    type: APIReference
-  - url: openapi/prolific-research-openapi.yml
-    type: OpenAPI
-  - url: collections/prolific-research.postman_collection.json
-    type: PostmanCollection
-  - url: collections/prolific-research.opencollection.json
-    type: OpenCollection
-  description: Retrieve the authenticated researcher account (users/me) with ID and
-    email, retrieve a user, and read user identity information used to scope workspaces,
-    projects, and API token access.
+  - type: OpenAPI
+    url: openapi/prolific-research-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
+- aid: prolific-research:prolific-research-workspaces-api
+  name: Prolific Workspaces API
+  description: Top-level containers that hold projects, fund studies, and scope teams.
+  humanURL: https://docs.prolific.com/api-reference/studies
+  baseURL: https://api.prolific.com/api/v1
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/prolific-research-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/studies
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/studies/get-studies
+  - type: PostmanCollection
+    url: collections/prolific-research.postman_collection.json
+  - type: OpenCollection
+    url: collections/prolific-research.opencollection.json
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/submissions
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/submissions/get-submissions
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/participant-groups/get-participant-groups
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/projects/get-projects
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/workspaces/get-workspace
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/messages
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/messages/get-messages
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/webhooks
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/webhooks/verifying
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/filters/filters-overview
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/filters/get-filters
+  - type: Documentation
+    url: https://docs.prolific.com/api-reference/bonuses
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/bonuses/pay-bonus-payments
+  - type: APIReference
+    url: https://docs.prolific.com/api-reference/users/get-user
 common:
 - type: AgenticAccess
   url: agentic-access/prolific-research-agentic-access.yml
