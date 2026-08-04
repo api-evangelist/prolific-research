@@ -1,0 +1,32 @@
+{
+  "provider": "prolific-research",
+  "sources": [
+    "prolific-research-bonuses-api-openapi.yml",
+    "prolific-research-filters-api-openapi.yml",
+    "prolific-research-hooks-api-openapi.yml",
+    "prolific-research-messages-api-openapi.yml",
+    "prolific-research-participant-groups-api-openapi.yml",
+    "prolific-research-projects-api-openapi.yml",
+    "prolific-research-studies-api-openapi.yml",
+    "prolific-research-submissions-api-openapi.yml",
+    "prolific-research-users-api-openapi.yml",
+    "prolific-research-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "prolific-research-bonuses-api-openapi.yml",
+    "prolific-research-filters-api-openapi.yml",
+    "prolific-research-hooks-api-openapi.yml",
+    "prolific-research-messages-api-openapi.yml",
+    "prolific-research-participant-groups-api-openapi.yml",
+    "prolific-research-projects-api-openapi.yml",
+    "prolific-research-studies-api-openapi.yml",
+    "prolific-research-submissions-api-openapi.yml",
+    "prolific-research-users-api-openapi.yml",
+    "prolific-research-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
