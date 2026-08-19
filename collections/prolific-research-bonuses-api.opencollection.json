@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Prolific Bonuses API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bonuses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set up bonuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.prolific.com/api/v1/submissions/bonus-payments/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a bulk bonus payment for a study from a CSV of participant/submission IDs and amounts. This does not pay the bonuses; call the pay endpoint after."
+        },
+        {
+          "info": {
+            "name": "Pay bonuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.prolific.com/api/v1/bulk-bonus-payments/:id/pay/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Pay a previously created bulk bonus payment. Payment is made asynchronously against your workspace balance. Up to 200 participants per request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

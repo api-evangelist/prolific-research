@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Prolific Bonuses Filters API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Filters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.prolific.com/api/v1/filters/"
+          },
+          "docs": "List all filters (requirements) that can be applied to your filter sets or studies."
+        },
+        {
+          "info": {
+            "name": "Get filter distribution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.prolific.com/api/v1/filters/:filter_id/distribution/",
+            "params": [
+              {
+                "name": "filter_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get filter distribution"
+        },
+        {
+          "info": {
+            "name": "Count participants",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.prolific.com/api/v1/participant-counts/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Count how many eligible participants match a set of filters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

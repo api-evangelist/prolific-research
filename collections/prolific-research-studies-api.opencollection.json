@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Prolific Bonuses Studies API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Studies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all studies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.prolific.com/api/v1/studies/",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter studies by status (e.g. UNPUBLISHED, ACTIVE, COMPLETED)."
+              }
+            ]
+          },
+          "docs": "Lists all studies, with the option to filter by study status."
+        },
+        {
+          "info": {
+            "name": "Create a draft study",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.prolific.com/api/v1/studies/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new draft study. Publishing is a separate transition step."
+        },
+        {
+          "info": {
+            "name": "Retrieve a study",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.prolific.com/api/v1/studies/:id/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The study ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a study"
+        },
+        {
+          "info": {
+            "name": "Update a study",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.prolific.com/api/v1/studies/:id/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The study ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a study"
+        },
+        {
+          "info": {
+            "name": "Delete a study",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.prolific.com/api/v1/studies/:id/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The study ID."
+              }
+            ]
+          },
+          "docs": "Delete a study"
+        },
+        {
+          "info": {
+            "name": "Transition study status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.prolific.com/api/v1/studies/:id/transition/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The study ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the status of a study, e.g. PUBLISH a draft, START, PAUSE, or STOP an active study."
+        },
+        {
+          "info": {
+            "name": "Show study cost",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.prolific.com/api/v1/studies/:id/cost/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The study ID."
+              }
+            ]
+          },
+          "docs": "Returns the calculated cost of a study including participant rewards and platform fee."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
