@@ -185,6 +185,8 @@ apis:
   humanURL: https://docs.prolific.com/api-reference/studies
   baseURL: https://api.prolific.com/api/v1
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -281,6 +283,8 @@ apis:
   humanURL: https://docs.prolific.com/api-reference/studies
   baseURL: https://api.prolific.com/api/v1
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -425,6 +429,8 @@ apis:
   humanURL: https://docs.prolific.com/api-reference/studies
   baseURL: https://api.prolific.com/api/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
