@@ -534,6 +534,9 @@ apis:
   - type: APIReference
     url: https://docs.prolific.com/api-reference/users/get-user
 common:
+- type: CapabilityMap
+  url: capabilities/prolific-research-capability-edges.yml
+  name: Prolific Business Capability Map
 - type: AgenticAccess
   url: agentic-access/prolific-research-agentic-access.yml
 - type: DomainSecurity
