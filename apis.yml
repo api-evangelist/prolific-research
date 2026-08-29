@@ -9,6 +9,18 @@ description: Prolific is an online research participant recruitment platform tha
   programmatically create and publish studies, review and approve submissions, manage
   participant groups, projects and workspaces, apply demographic filters and requirements,
   pay bonuses, message participants, and subscribe to event webhooks (hooks).
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
