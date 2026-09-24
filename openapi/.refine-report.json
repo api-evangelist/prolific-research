@@ -27,6 +27,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "prolific-research-bonuses-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-filters-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-hooks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-messages-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-participant-groups-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-projects-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-studies-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-submissions-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-users-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "prolific-research-workspaces-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

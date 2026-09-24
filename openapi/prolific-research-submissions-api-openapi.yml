@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Prolific Bonuses Submissions API
   description: 'The Prolific API is a versioned REST interface for the Prolific online research participant recruitment platform. Researchers use it to programmatically create and publish studies, review and approve submissions, manage participant groups, projects and workspaces, apply demographic filters and requirements, pay bonuses, message participants, and subscribe to event webhooks (hooks). The API is served from https://api.prolific.com/api/v1 and follows a standard REST pattern: a collection endpoint (.../resource/) for GET (list) and POST (create), and an element endpoint (.../resource/{id}/) for GET, PATCH/PUT, and DELETE. All requests are authenticated with an API token supplied in the Authorization header as "Token <your token>".'
@@ -156,25 +156,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            detail:
-              type: string
-            error_code:
-              type: integer
-    SubmissionList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Submission'
-        _links:
-          type: object
     Submission:
       type: object
       properties:
@@ -192,6 +173,25 @@ components:
         completed_at:
           type: string
           format: date-time
+    SubmissionList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Submission'
+        _links:
+          type: object
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            detail:
+              type: string
+            error_code:
+              type: integer
   responses:
     Unauthorized:
       description: Authentication credentials were missing or invalid.
